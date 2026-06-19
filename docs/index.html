@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
 <title>溯疑踪 v5</title>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -190,9 +190,16 @@ body{background:#0a0505;color:#e8dcc8;font-family:"Noto Serif SC","STKaiti","Kai
 
 @media(orientation:landscape)and(max-width:900px){.dlg-portrait-img{max-height:55vh}#text-area{min-height:80px;max-height:130px}}
 @media(orientation:portrait){#scene-view{max-height:32vh}.dlg-portrait-img{max-height:40vh}.game-title{font-size:30px}}
+/* Portrait — show rotate hint */
+#rotate-hint{display:none;position:fixed;inset:0;z-index:99999;background:#0a0505;flex-direction:column;align-items:center;justify-content:center;gap:20px;font-family:"STKaiti","KaiTi",serif}
+#rotate-hint.show{display:flex}
+#rotate-hint .rh-icon{font-size:56px;animation:rhSpin 1.8s ease-in-out infinite}
+@keyframes rhSpin{0%,100%{transform:rotate(0deg)}50%{transform:rotate(90deg)}}
+#rotate-hint .rh-text{color:#c9a96e;font-size:20px;letter-spacing:4px}
+#rotate-hint .rh-sub{color:#8b7355;font-size:13px}
 </style>
 </head>
-<body><div id="app"></div>
+<body><div id="rotate-hint"><div class="rh-icon">📱</div><div class="rh-text">请旋转手机</div><div class="rh-sub">横屏体验更佳</div></div><div id="app"></div>
 
 <script>
 var SAVE_KEY="suyizong_v5";
@@ -523,7 +530,9 @@ var AudioSys={
   }
 };
 
-document.addEventListener("DOMContentLoaded",function(){
+function checkOrientation(){var rh=document.getElementById("rotate-hint");if(window.innerHeight>window.innerWidth){rh.classList.add("show");}else{rh.classList.remove("show");}}
+window.addEventListener("orientationchange",function(){setTimeout(checkOrientation,200);});window.addEventListener("resize",checkOrientation);
+document.addEventListener("DOMContentLoaded",function(){checkOrientation();
   AudioSys.init();AudioSys.startBGM();
   var g=document.createElement("div");g.id="cursor-glow";document.body.appendChild(g);
   document.addEventListener("mousemove",function(e){g.style.left=e.clientX+"px";g.style.top=e.clientY+"px";});
