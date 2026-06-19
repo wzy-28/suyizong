@@ -1,0 +1,603 @@
+/* ============================================================
+   溯疑踪 — 古风探案文游 全局样式
+   ============================================================ */
+
+/* === Reset & Base === */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;height:100%;overflow:hidden}
+body{
+  background:#0a0505;color:#e8dcc8;
+  font-family:"Noto Serif SC","STKaiti","KaiTi","SimSun",serif;
+  -webkit-font-smoothing:antialiased;
+}
+#app{width:100%;height:100%;position:relative;overflow:hidden;display:flex;flex-direction:column;}
+
+/* === Ancient Border Frame Mixin === */
+.ancient-border{
+  position:relative;
+}
+.ancient-border::before{
+  content:"";position:absolute;inset:4px;z-index:2;pointer-events:none;
+  border:1px solid rgba(201,169,110,0.25);
+}
+.ancient-border::after{
+  content:"";position:absolute;inset:1px;z-index:2;pointer-events:none;
+  border:1px solid rgba(107,26,26,0.3);
+}
+
+/* Corner decorations */
+.corner-tl,.corner-tr,.corner-bl,.corner-br{
+  position:absolute;z-index:3;pointer-events:none;
+  width:28px;height:28px;
+}
+.corner-tl{top:3px;left:3px;border-top:2px solid #6b1a1a;border-left:2px solid #6b1a1a;}
+.corner-tr{top:3px;right:3px;border-top:2px solid #6b1a1a;border-right:2px solid #6b1a1a;}
+.corner-bl{bottom:3px;left:3px;border-bottom:2px solid #6b1a1a;border-left:2px solid #6b1a1a;}
+.corner-br{bottom:3px;right:3px;border-bottom:2px solid #6b1a1a;border-right:2px solid #6b1a1a;}
+
+/* ============================================================
+   COVER SCREEN
+   ============================================================ */
+.cover-screen{
+  position:absolute;inset:0;z-index:100;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  overflow:hidden;
+}
+.cover-bg{
+  position:absolute;inset:0;
+  background-size:cover;background-position:center;
+  opacity:0;transition:opacity 1.5s ease;
+  z-index:0;
+}
+.cover-bg.active{opacity:1;}
+.cover-overlay{
+  position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:linear-gradient(135deg,rgba(10,5,5,0.65) 0%,rgba(10,5,5,0.25) 50%,rgba(10,5,5,0.65) 100%);
+}
+.cover-content{
+  position:relative;z-index:2;
+  display:flex;flex-direction:column;align-items:center;
+  gap:22px;
+}
+
+/* Title */
+.game-title{
+  font-size:48px;color:#c9a96e;
+  letter-spacing:10px;
+  text-shadow:0 0 40px rgba(201,169,110,0.25),0 2px 4px rgba(0,0,0,0.8);
+}
+.game-subtitle{
+  font-size:15px;color:#8b7355;
+  letter-spacing:5px;margin-bottom:10px;
+}
+
+/* === Animated Button (uses 选项按钮.jpeg) === */
+.ani-btn{
+  position:relative;
+  width:200px;height:58px;
+  background-image:url(../tu/选项按钮.jpeg);
+  background-size:100% 100%;
+  border:none;cursor:pointer;
+  color:#3a2010;
+  font-family:"STKaiti","KaiTi","Noto Serif SC",serif;
+  font-size:17px;font-weight:bold;
+  letter-spacing:6px;
+  writing-mode:vertical-rl;
+  text-orientation:upright;
+  display:flex;align-items:center;justify-content:center;
+  transition:all 0.3s;filter:brightness(1);
+}
+.ani-btn:hover{
+  filter:brightness(1.15);
+  transform:scale(1.04);
+}
+.ani-btn.disabled{
+  filter:brightness(0.5) grayscale(0.4);
+  pointer-events:none;
+}
+.ani-btn.back-btn{
+  width:140px;height:48px;
+  font-size:14px;letter-spacing:4px;
+  filter:brightness(0.7);
+}
+
+/* ============================================================
+   WORLDVIEW SELECTION
+   ============================================================ */
+.world-select-screen{
+  position:absolute;inset:0;z-index:100;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  overflow:hidden;
+}
+.ws-bg{
+  position:absolute;inset:0;
+  background-size:cover;background-position:center;
+  opacity:0;transition:opacity 1.5s ease;
+  z-index:0;
+}
+.ws-bg.active{opacity:1;}
+.ws-content{
+  position:relative;z-index:2;
+  display:flex;flex-direction:column;align-items:center;
+  gap:18px;
+}
+.ws-title{
+  font-size:26px;color:#c9a96e;
+  letter-spacing:6px;
+  text-shadow:0 2px 10px rgba(0,0,0,0.9);
+  margin-bottom:10px;
+}
+
+/* ============================================================
+   PROLOGUE / BACKSTORY
+   ============================================================ */
+.prologue-screen{
+  position:absolute;inset:0;z-index:95;
+  background-image:url(../tu/旁白背景.jpeg);
+  background-size:cover;background-position:center;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;
+}
+.prologue-screen::before{
+  content:"";position:absolute;inset:0;
+  background:rgba(0,0,0,0.55);
+}
+.prologue-box{
+  position:relative;z-index:1;
+  width:min(600px,75%);
+}
+.prologue-box img{width:100%;display:block;}
+.prologue-inner{
+  position:absolute;inset:14% 10% 14% 10%;
+  display:flex;flex-direction:column;align-items:center;gap:10px;
+  font-family:"STKaiti","KaiTi",serif;
+  font-size:19px;color:#e8dcc4;
+  line-height:2.3;letter-spacing:2px;
+  overflow-y:auto;
+}
+.prologue-line{
+  opacity:0;transition:opacity 0.5s ease;
+  text-align:center;
+}
+.prologue-line.show{opacity:1;}
+.prologue-hint{
+  margin-top:6px;font-size:13px;color:#8b7355;
+  opacity:0;transition:opacity 0.6s;
+}
+.prologue-hint.show{opacity:1;}
+
+/* ============================================================
+   CHARACTER CREATION
+   ============================================================ */
+.creation-screen{
+  position:absolute;inset:0;z-index:90;
+  background-image:url(../tu/家.png);
+  background-size:cover;background-position:center;
+  display:flex;gap:28px;padding:30px;
+}
+.creation-screen::before{
+  content:"";position:absolute;inset:0;
+  background:rgba(0,0,0,0.35);
+}
+.creation-preview{
+  flex:1;display:flex;align-items:center;justify-content:center;
+  position:relative;z-index:1;
+  background:rgba(10,5,5,0.4);
+  border:1px solid rgba(201,169,110,0.2);
+  min-height:380px;
+}
+.creation-preview img{
+  max-width:85%;max-height:85%;object-fit:contain;
+}
+.creation-options{
+  width:350px;display:flex;flex-direction:column;gap:16px;
+  position:relative;z-index:1;
+  overflow-y:auto;padding-right:8px;
+}
+.opt-group{}
+.opt-group label{
+  color:#c9a96e;font-size:13px;margin-bottom:6px;
+  display:block;letter-spacing:3px;
+}
+.opt-row{display:flex;gap:6px;flex-wrap:wrap;}
+.opt-btn{
+  padding:8px 16px;background:rgba(10,5,5,0.6);
+  border:1px solid #3a2a1a;color:#b0a090;
+  font-size:13px;cursor:pointer;font-family:inherit;
+  transition:all 0.2s;letter-spacing:1px;
+}
+.opt-btn:hover{border-color:#6b4a2a;color:#c9a96e;}
+.opt-btn.sel{
+  background:rgba(107,26,26,0.4);
+  border-color:#c9a96e;color:#c9a96e;
+}
+.creation-input{
+  padding:10px 14px;background:rgba(10,5,5,0.6);
+  border:1px solid #3a2a1a;color:#e8dcc8;
+  font-size:16px;font-family:inherit;width:100%;outline:none;
+  letter-spacing:2px;
+}
+.creation-input:focus{border-color:#c9a96e;}
+.creation-confirm{
+  margin-top:8px;align-self:center;
+}
+
+/* ============================================================
+   OPENING ANIMATION
+   ============================================================ */
+.opening-screen{
+  position:absolute;inset:0;z-index:85;
+  background-size:cover;background-position:center;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:flex-end;
+  padding-bottom:50px;cursor:pointer;
+}
+.opening-screen::before{
+  content:"";position:absolute;inset:0;
+  background:rgba(0,0,0,0.3);
+}
+.opening-stage{
+  position:relative;z-index:1;
+  display:flex;align-items:flex-end;gap:30px;
+  margin-bottom:12px;
+}
+.opening-npc-img{
+  max-height:280px;object-fit:contain;
+}
+.opening-text-box{
+  position:relative;z-index:1;
+  width:min(550px,70%);
+}
+.opening-text-box img{width:100%;display:block;}
+.opening-text-inner{
+  position:absolute;inset:12% 8% 20% 8%;
+  display:flex;flex-direction:column;align-items:center;
+  justify-content:center;text-align:center;
+  color:#e8dcc4;font-size:17px;line-height:2;
+  font-family:"STKaiti","KaiTi",serif;
+  letter-spacing:1px;
+}
+.opening-hint{
+  position:relative;z-index:1;
+  color:#8b7355;font-size:13px;
+  margin-top:8px;animation:pulse 2s ease infinite;
+}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+
+/* ============================================================
+   TOP BAR
+   ============================================================ */
+#top-bar{
+  height:50px;min-height:50px;
+  display:flex;align-items:center;
+  padding:0 14px;gap:10px;
+  background:linear-gradient(180deg,#1a0a0a 0%,#100606 100%);
+  border-bottom:2px solid #6b1a1a;
+  font-size:13px;z-index:10;position:relative;
+}
+#top-bar::after{
+  content:"";position:absolute;bottom:-1px;left:15%;right:15%;
+  height:1px;background:linear-gradient(90deg,transparent,#c9a96e,transparent);
+}
+#top-bar .tb-world{color:#c9a96e;font-weight:bold;}
+#top-bar .tb-time{color:#b8a070;font-weight:600;min-width:40px;}
+#top-bar .tb-scene{color:#e8dcc8;font-weight:600;letter-spacing:2px;flex:1;}
+#top-bar .tb-clues{color:#8b7355;font-size:11px;}
+.tb-btn{
+  padding:4px 12px;background:transparent;
+  border:1px solid #3a1a1a;color:#b0a090;
+  font-size:11px;cursor:pointer;font-family:inherit;
+  transition:all 0.2s;
+}
+.tb-btn:hover{background:#2a1010;color:#c9a96e;border-color:#6b1a1a;}
+
+/* ============================================================
+   SCENE VIEWPORT
+   ============================================================ */
+#scene-view{
+  flex:1;position:relative;overflow:hidden;
+  background:#0a0505;min-height:0;
+}
+#scene-bg{
+  position:absolute;top:0;left:0;width:100%;height:100%;
+  background-size:cover;background-position:center;background-repeat:no-repeat;
+}
+
+/* Scene NPC portrait */
+.scene-npc{
+  position:absolute;z-index:6;cursor:pointer;
+  transition:all 0.3s ease;filter:brightness(1);
+}
+.scene-npc:hover{
+  filter:brightness(1.15);
+  transform:scale(1.05);
+  z-index:8;
+}
+
+/* NPC Name Card */
+.name-card{
+  position:absolute;z-index:9;
+  pointer-events:none;
+  opacity:0;transition:opacity 0.6s ease;
+}
+.name-card.show{opacity:1;}
+.name-card img{width:140px;display:block;}
+.name-card .nc-text{
+  position:absolute;inset:14% 12% 14% 12%;
+  display:flex;flex-direction:column;align-items:center;
+  justify-content:center;
+  writing-mode:vertical-rl;text-orientation:upright;
+  color:#2a1a0a;font-family:"STKaiti","KaiTi",serif;
+  font-size:12px;line-height:2.2;letter-spacing:4px;
+  font-weight:bold;
+}
+
+/* === Scene Interactables === */
+.scene-hotspot{
+  position:absolute;cursor:pointer;z-index:5;
+  border:1px solid rgba(201,169,110,0);
+  border-radius:3px;
+  transition:all 0.3s;
+}
+.scene-hotspot:hover{
+  border-color:rgba(201,169,110,0.5);
+  background:rgba(107,26,26,0.15);
+  box-shadow:0 0 15px rgba(201,169,110,0.12);
+}
+.scene-hotspot .hs-label{
+  position:absolute;bottom:-22px;left:50%;transform:translateX(-50%);
+  white-space:nowrap;font-size:11px;color:#c9a96e;
+  opacity:0;transition:opacity 0.3s;
+  text-shadow:0 0 5px rgba(0,0,0,0.9);
+}
+.scene-hotspot:hover .hs-label{opacity:1;}
+
+/* ============================================================
+   TEXT / DIALOGUE AREA
+   ============================================================ */
+#text-area{
+  min-height:130px;max-height:210px;
+  padding:12px 16px;
+  background:linear-gradient(0deg,#100606 0%,#1a0a0a 100%);
+  border-top:2px solid #6b1a1a;
+  border-bottom:1px solid #2a1a0a;
+  overflow-y:auto;
+  display:flex;flex-direction:column;gap:5px;
+}
+#text-area::before{
+  content:"";position:absolute;top:-1px;left:12%;right:12%;
+  height:1px;background:linear-gradient(90deg,transparent,#c9a96e,transparent);
+}
+.text-line{
+  animation:fadeUp 0.35s ease;
+  padding:4px 10px;border-left:2px solid transparent;
+  display:flex;align-items:flex-start;gap:8px;
+  font-size:14px;line-height:1.8;
+}
+.text-line.narration{
+  color:#8b7355;font-style:italic;justify-content:center;
+  border-left-color:transparent;text-align:center;
+}
+.text-line.npc{color:#e0d8c4;border-left-color:#6b1a1a;background:rgba(107,26,26,0.04);}
+.text-line.player{color:#c0d8e8;border-left-color:#4a7a9a;background:rgba(30,60,90,0.06);flex-direction:row-reverse;}
+.text-line .tl-speaker{color:#c9a96e;font-weight:700;white-space:nowrap;min-width:55px;font-size:12px;}
+.text-line.player .tl-speaker{color:#7ca8c8;}
+.text-line .tl-msg{color:#d4d0c4;line-height:1.7;}
+.text-line .tl-portrait{width:38px;height:38px;border-radius:3px;object-fit:cover;border:1px solid #3a1a1a;flex-shrink:0;}
+
+/* System text */
+.text-line.system{color:#6b8b5a;border-left-color:#4a6a3a;justify-content:center;text-align:center;}
+
+/* ============================================================
+   INPUT AREA
+   ============================================================ */
+#input-area{
+  padding:8px 14px 12px;
+  background:linear-gradient(0deg,#0a0505 0%,#100606 100%);
+  border-top:1px solid #2a1a0a;
+  display:flex;flex-direction:column;gap:7px;
+}
+#quick-bar{display:flex;gap:5px;flex-wrap:wrap;}
+.quick-chip{
+  padding:4px 12px;background:rgba(26,10,10,0.8);
+  border:1px solid #3a1a1a;color:#b0a090;
+  font-size:11px;cursor:pointer;font-family:inherit;
+  transition:all 0.2s;
+}
+.quick-chip:hover{background:#2a1010;color:#c9a96e;border-color:#6b1a1a;}
+#input-row{display:flex;gap:8px;}
+#chat-input{
+  flex:1;padding:10px 14px;
+  background:rgba(26,10,10,0.9);border:1px solid #3a1a1a;
+  color:#e8dcc8;font-size:15px;font-family:inherit;
+  outline:none;transition:border-color 0.2s;
+}
+#chat-input:focus{border-color:#6b1a1a;}
+#chat-input::placeholder{color:#5a4a3a;}
+#send-btn{
+  padding:10px 24px;background:#6b1a1a;
+  border:1px solid #8b2a2a;color:#e8dcc8;
+  font-size:14px;font-family:inherit;font-weight:600;
+  cursor:pointer;transition:all 0.2s;letter-spacing:2px;
+}
+#send-btn:hover{background:#8b2a2a;border-color:#c9a96e;}
+
+/* ============================================================
+   DIALOGUE MODE (click NPC → popup)
+   ============================================================ */
+.dlg-overlay{
+  position:absolute;inset:0;z-index:80;
+  background:rgba(5,3,2,0.93);
+  display:flex;flex-direction:column;
+  animation:fadeIn 0.4s ease;
+}
+.dlg-exit{
+  position:absolute;top:10px;right:14px;z-index:5;
+  padding:5px 14px;background:rgba(26,10,10,0.7);
+  border:1px solid #6b1a1a;color:#c9a96e;
+  cursor:pointer;font-size:12px;font-family:inherit;
+}
+.dlg-exit:hover{background:#6b1a1a;color:#e8dcc8;}
+.dlg-stage{
+  flex:1;display:flex;align-items:flex-end;justify-content:center;
+  gap:6%;padding:20px 20px 10px;
+}
+.dlg-portrait-box{
+  display:flex;flex-direction:column;align-items:center;
+  opacity:0;transition:all 0.5s ease;
+}
+.dlg-portrait-box.show{opacity:1;}
+.dlg-portrait-box.npc-side{transform:translateX(-30px);}
+.dlg-portrait-box.npc-side.show{transform:translateX(0);}
+.dlg-portrait-box.player-side{transform:translateX(30px);transition-delay:0.2s;}
+.dlg-portrait-box.player-side.show{transform:translateX(0);}
+.dlg-portrait-img{max-height:55vh;max-width:200px;object-fit:contain;}
+.dlg-portrait-name{
+  color:#c9a96e;font-size:12px;letter-spacing:2px;
+  margin-top:6px;font-weight:bold;
+}
+.dlg-chat-area{
+  max-height:180px;min-height:110px;overflow-y:auto;
+  padding:10px 18px;
+  background:rgba(10,5,5,0.85);
+  border-top:1px solid #2a1a0a;
+}
+.dlg-msg{color:#d4d0c4;font-size:14px;line-height:1.8;margin-bottom:4px;}
+.dlg-msg .w{color:#c9a96e;font-weight:700;}
+.dlg-msg.me .w{color:#7ca8c8;}
+.dlg-input-row{display:flex;padding:8px 14px;gap:8px;background:rgba(18,8,8,0.95);border-top:1px solid #2a1a0a;}
+.dlg-input-row input{
+  flex:1;padding:10px 14px;
+  background:rgba(26,10,10,0.8);border:1px solid #3a1a1a;
+  color:#e8dcc8;font-family:inherit;font-size:15px;outline:none;
+}
+.dlg-input-row input:focus{border-color:#6b1a1a;}
+.dlg-input-row button{
+  padding:10px 22px;background:#6b1a1a;border:1px solid #8b2a2a;
+  color:#e8dcc8;cursor:pointer;font-family:inherit;
+}
+.dlg-input-row button:hover{background:#8b2a2a;border-color:#c9a96e;}
+
+/* ============================================================
+   CASE PANEL (slide from right)
+   ============================================================ */
+#case-panel{
+  position:absolute;top:50px;right:0;width:300px;
+  height:calc(100% - 50px);
+  background:linear-gradient(180deg,#1a0a0a 0%,#100606 100%);
+  border-left:2px solid #6b1a1a;
+  transform:translateX(100%);transition:transform 0.4s ease;
+  z-index:20;overflow-y:auto;padding:18px;
+}
+#case-panel.open{transform:translateX(0);}
+#case-panel h3{
+  color:#c9a96e;margin-bottom:14px;font-size:17px;
+  letter-spacing:3px;font-weight:700;
+  border-bottom:1px solid #3a1a1a;padding-bottom:8px;
+}
+.case-section{margin-bottom:16px;}
+.case-section h4{
+  color:#8b7355;font-size:12px;margin-bottom:6px;
+  letter-spacing:2px;font-weight:600;
+}
+.case-item{
+  padding:7px 8px;margin-bottom:2px;
+  background:rgba(26,10,10,0.6);border:1px solid #2a1a0a;
+  font-size:13px;color:#b0a090;transition:all 0.2s;
+}
+.case-item.found{border-left:3px solid #c9a96e;color:#e8dcc8;}
+.case-item .ci-mark{color:#c9a96e;margin-right:4px;}
+
+/* ============================================================
+   ENDING OVERLAY
+   ============================================================ */
+.ending-overlay{
+  position:absolute;inset:0;z-index:50;
+  background:rgba(0,0,0,0.9);
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  animation:fadeIn 0.6s ease;
+}
+.ending-overlay h2{color:#c9a96e;margin-bottom:14px;font-size:24px;letter-spacing:4px;}
+.ending-overlay p{color:#b0aca0;margin-bottom:20px;text-align:center;max-width:420px;line-height:1.8;}
+
+/* ============================================================
+   LOCATION PANEL (dropdown)
+   ============================================================ */
+.loc-panel{
+  position:absolute;top:50px;right:0;width:240px;
+  background:rgba(26,10,10,0.97);border:1px solid #6b1a1a;
+  z-index:30;padding:14px;
+}
+.loc-item{
+  padding:8px 10px;margin-bottom:2px;
+  background:rgba(26,10,10,0.5);border:1px solid #2a1a0a;
+  color:#b0a090;cursor:pointer;font-size:13px;
+  transition:all 0.2s;
+}
+.loc-item:hover{background:rgba(40,16,16,0.5);border-color:#6b1a1a;color:#c9a96e;}
+
+/* ============================================================
+   DESK / DEDUCTION SCREEN
+   ============================================================ */
+.desk-screen{
+  position:absolute;inset:0;z-index:40;
+  background-size:cover;background-position:center;
+  display:flex;flex-direction:column;
+  padding:60px 30px 30px;
+}
+.desk-screen::before{
+  content:"";position:absolute;inset:0;
+  background:rgba(10,5,5,0.5);
+}
+.desk-content{
+  position:relative;z-index:1;flex:1;
+  display:flex;flex-direction:column;gap:14px;
+  max-width:650px;margin:0 auto;width:100%;
+}
+.desk-content h2{
+  color:#c9a96e;font-size:22px;letter-spacing:5px;
+  text-align:center;margin-bottom:6px;
+}
+.desk-clue-list{
+  display:flex;flex-wrap:wrap;gap:8px;
+}
+.desk-clue{
+  padding:8px 12px;background:rgba(26,10,10,0.7);
+  border:1px solid #3a1a1a;color:#b0a090;
+  font-size:13px;cursor:pointer;transition:all 0.2s;
+}
+.desk-clue:hover{border-color:#c9a96e;color:#e8dcc8;}
+.desk-clue.selected{border-color:#c9a96e;color:#c9a96e;background:rgba(107,26,26,0.3);}
+.desk-actions{display:flex;gap:10px;justify-content:center;margin-top:10px;}
+
+/* ============================================================
+   ANIMATIONS
+   ============================================================ */
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeOut{from{opacity:1}to{opacity:0}}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media(orientation:landscape)and(max-width:900px){
+  #text-area{min-height:85px;max-height:150px;padding:8px 12px;}
+  .text-line{font-size:12px;}
+  #creation-screen{padding:16px;gap:16px;}
+  .creation-options{width:260px;}
+  #case-panel{width:240px;padding:12px;}
+  .dlg-portrait-img{max-height:40vh;max-width:140px;}
+}
+
+@media(orientation:portrait){
+  #scene-view{max-height:38vh;}
+  #text-area{min-height:100px;max-height:160px;}
+  .creation-screen{flex-direction:column;padding:16px;}
+  .creation-preview{min-height:200px;}
+  .creation-options{width:100%;}
+  .game-title{font-size:32px;}
+  .ani-btn{width:160px;height:48px;font-size:15px;}
+}

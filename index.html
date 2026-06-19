@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+  <title>溯疑踪 — 双世奇案·由你执笔</title>
+  <link rel="stylesheet" href="styles/game.css">
+</head>
+<body>
+  <div id="app"></div>
+
+  <!-- 引擎核心 -->
+  <script src="engine/core.js"></script>
+  <script src="engine/input.js"></script>
+  <script src="engine/ui.js"></script>
+  <script src="engine/save.js"></script>
+
+  <!-- 案件数据 -->
+  <script src="data/case_001.js"></script>
+
+  <!-- 启动 -->
+  <script>
+  document.addEventListener("DOMContentLoaded", function() {
+    Game.init();
+  });
+  </script>
+</body>
+</html>

@@ -1,0 +1,1 @@
+﻿const ANCIENT_CHARACTERS = {};
